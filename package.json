@@ -1,0 +1,20 @@
+{
+  "name": "monitoring",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "monitor": "node src/monitoring.js",
+    "minio-monitor": "node src/monitoring-minio.js",
+    "get-progress": "node src/axios-script/get-progress.js",
+    "concurrent": "node src/axios-script/get-progress.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.10.0",
+    "csv-parser": "^3.2.0",
+    "minio": "^8.0.5"
+  }
+}
