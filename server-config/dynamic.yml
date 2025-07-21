@@ -1,0 +1,83 @@
+http:
+  routers:
+    traefik-dashboard:
+      rule: Host("traefik.isac-dev.com")
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+      service: api@internal
+      middlewares:
+        - "auth"
+
+    api:
+      rule: Host("api.isac-dev.com")
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+      service: api-service
+
+    minio:
+      rule: Host("minio.isac-dev.com")
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+      service: minio-service
+
+    minio-api:
+      rule: Host("api-minio.isac-dev.com")
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+      service: minio-api-service
+
+    bullboard:
+      rule: Host("bullboard.isac-dev.com")
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+      service: bullboard-service
+
+    ap:
+      rule: Host("isac-dev.com")
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+      service: ap-service
+
+  services:
+    api-service:
+      loadBalancer:
+        servers:
+          - url: "http://api:8080"
+
+    ap-service:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.100.32:3001"
+
+    minio-service:
+      loadBalancer:
+        servers:
+          - url: "http://minio:9001"
+
+    minio-api-service:
+      loadBalancer:
+        servers:
+          - url: "http://minio:9000"
+
+    bullboard-service:
+      loadBalancer:
+        servers:
+          - url: "http://bullboard:3000"
+
+  middlewares:
+    auth:
+      basicAuth:
+        users:
+          - "admin:$2y$05$55KTMeP9avhFqkzS4cRZa.FxVk5BJq2pxVJow8vg.DlGTWrlyn1wu"
